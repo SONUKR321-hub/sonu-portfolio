@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Projects | Sonu Kumar Portfolio</title>
+    <meta name="description" content="Complete showcase of Sonu Kumar's GitHub projects - Data Science, AI/ML, Web Development, and more">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    
+    <style>
+        /* Design System CSS - Simplified for projects page */
+        :root {
+          /* Colors */
+          --color-white: rgba(255, 255, 255, 1);
+          --color-cream-50: rgba(252, 252, 249, 1);
+          --color-cream-100: rgba(255, 255, 253, 1);
+          --color-gray-200: rgba(245, 245, 245, 1);
+          --color-gray-300: rgba(167, 169, 169, 1);
+          --color-gray-400: rgba(119, 124, 124, 1);
+          --color-slate-500: rgba(98, 108, 113, 1);
+          --color-charcoal-700: rgba(31, 33, 33, 1);
+          --color-charcoal-800: rgba(38, 40, 40, 1);
+          --color-slate-900: rgba(19, 52, 59, 1);
+          --color-purple-400: rgba(129, 140, 248, 1);
+          --color-purple-500: rgba(99, 102, 241, 1);
+          --color-purple-600: rgba(79, 70, 229, 1);
+          --color-blue-400: rgba(96, 165, 250, 1);
+          --color-blue-500: rgba(59, 130, 246, 1);
+
+          /* Semantic Colors */
+          --color-background: var(--color-cream-50);
+          --color-surface: var(--color-cream-100);
+          --color-text: var(--color-slate-900);
+          --color-text-secondary: var(--color-slate-500);
+          --color-primary: var(--color-purple-500);
+          --color-primary-hover: var(--color-purple-600);
+          --color-border: rgba(94, 82, 64, 0.2);
+          --color-card-border: rgba(94, 82, 64, 0.12);
+          --color-background-rgb: 252, 252, 249;
+
+          /* Typography */
+          --font-family-base: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+          --font-size-sm: 12px;
+          --font-size-base: 14px;
+          --font-size-lg: 16px;
+          --font-size-xl: 18px;
+          --font-size-2xl: 20px;
+          --font-size-3xl: 24px;
+          --font-size-4xl: 30px;
+          --font-weight-normal: 400;
+          --font-weight-medium: 500;
+          --font-weight-semibold: 550;
+          --font-weight-bold: 600;
+
+          /* Spacing */
+          --space-8: 8px;
+          --space-12: 12px;
+          --space-16: 16px;
+          --space-20: 20px;
+          --space-24: 24px;
+          --space-32: 32px;
+
+          /* Border Radius */
+          --radius-base: 8px;
+          --radius-lg: 12px;
+          --radius-full: 9999px;
+
+          /* Shadows */
+          --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
+        }
+
+        /* Dark mode colors */
+        @media (prefers-color-scheme: dark) {
+          :root {
+            --color-background: var(--color-charcoal-700);
+            --color-surface: var(--color-charcoal-800);
+            --color-text: var(--color-gray-200);
+            --color-text-secondary: rgba(167, 169, 169, 0.7);
+            --color-primary: var(--color-purple-400);
+            --color-primary-hover: rgba(147, 197, 253, 1);
+            --color-border: rgba(119, 124, 124, 0.3);
+            --color-card-border: rgba(119, 124, 124, 0.2);
+            --color-background-rgb: 31, 33, 33;
+          }
+        }
+
+        [data-theme="dark"] {
+          --color-background: var(--color-charcoal-700);
+          --color-surface: var(--color-charcoal-800);
+          --color-text: var(--color-gray-200);
+          --color-text-secondary: rgba(167, 169, 169, 0.7);
+          --color-primary: var(--color-purple-400);
+          --color-primary-hover: rgba(147, 197, 253, 1);
+          --color-border: rgba(119, 124, 124, 0.3);
+          --color-card-border: rgba(119, 124, 124, 0.2);
+          --color-background-rgb: 31, 33, 33;
+        }
+
+        /* Base styles */
+        * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+        }
+
+        html {
+          font-size: var(--font-size-base);
+          font-family: var(--font-family-base);
+          scroll-behavior: smooth;
+        }
+
+        body {
+          background-color: var(--color-background);
+          color: var(--color-text);
+          -webkit-font-smoothing: antialiased;
+          transition: background-color 0.3s ease, color 0.3s ease;
+          position: relative;
+        }
+
+        body::before {
+          content: '';
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-image: radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.05) 0%, transparent 50%),
+                            radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.05) 0%, transparent 50%);
+          pointer-events: none;
+          z-index: -1;
+        }
+
+        /* Navigation */
+        .navbar {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          z-index: 1000;
+          padding: var(--space-16) var(--space-32);
+          background: rgba(var(--color-background-rgb), 0.95);
+          backdrop-filter: blur(10px);
+          border-bottom: 1px solid var(--color-border);
+          transition: all 0.3s ease;
+        }
+
+        .nav-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          max-width: 1280px;
+          margin: 0 auto;
+        }
+
+        .logo {
+          font-size: var(--font-size-2xl);
+          font-weight: var(--font-weight-bold);
+          color: var(--color-primary);
+          text-decoration: none;
+        }
+
+        .nav-links {
+          display: flex;
+          gap: var(--space-24);
+          align-items: center;
+        }
+
+        .nav-link {
+          color: var(--color-text);
+          text-decoration: none;
+          transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+          color: var(--color-primary);
+        }
+
+        .theme-toggle {
+          background: none;
+          border: 2px solid var(--color-border);
+          border-radius: var(--radius-full);
+          padding: var(--space-8);
+          cursor: pointer;
+          color: var(--color-text);
+          transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+          border-color: var(--color-primary);
+          color: var(--color-primary);
+        }
+
+        /* Main Content */
+        .main-content {
+          padding-top: 100px;
+          min-height: 100vh;
+        }
+
+        .container {
+          max-width: 1280px;
+          margin: 0 auto;
+          padding: 0 var(--space-32);
+        }
+
+        .page-header {
+          text-align: center;
+          margin-bottom: var(--space-32);
+        }
+
+        .page-title {
+          font-size: var(--font-size-4xl);
+          font-weight: var(--font-weight-bold);
+          margin-bottom: var(--space-16);
+          background: linear-gradient(135deg, var(--color-primary), var(--color-blue-400));
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        .page-subtitle {
+          font-size: var(--font-size-xl);
+          color: var(--color-text-secondary);
+          max-width: 600px;
+          margin: 0 auto;
+        }
+
+        /* Filter Section */
+        .filter-section {
+          margin-bottom: var(--space-32);
+          text-align: center;
+        }
+
+        .filter-buttons {
+          display: flex;
+          justify-content: center;
+          gap: var(--space-12);
+          flex-wrap: wrap;
+        }
+
+        .filter-btn {
+          padding: var(--space-8) var(--space-16);
+          border: 2px solid var(--color-border);
+          background: transparent;
+          color: var(--color-text);
+          border-radius: var(--radius-full);
+          cursor: pointer;
+          transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+          border-color: var(--color-primary);
+          background: var(--color-primary);
+          color: white;
+        }
+
+        /* Project Grid */
+        .projects-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: var(--space-24);
+          margin-bottom: var(--space-32);
+        }
+
+        .project-card {
+          background: var(--color-surface);
+          border-radius: var(--radius-lg);
+          border: 1px solid var(--color-card-border);
+          overflow: hidden;
+          transition: all 0.3s ease;
+          opacity: 0;
+          transform: translateY(20px);
+        }
+
+        .project-card.visible {
+          opacity: 1;
+          transform: translateY(0);
+        }
+
+        .project-card:hover {
+          transform: translateY(-5px);
+          box-shadow: var(--shadow-lg);
+        }
+
+        .project-header {
+          padding: var(--space-20);
+          display: flex;
+          align-items: center;
+          gap: var(--space-12);
+          border-bottom: 1px solid var(--color-card-border);
+        }
+
+        .project-emoji {
+          font-size: 2rem;
+          flex-shrink: 0;
+        }
+
+        .project-title {
+          font-size: var(--font-size-xl);
+          font-weight: var(--font-weight-semibold);
+          color: var(--color-text);
+          margin: 0;
+        }
+
+        .project-content {
+          padding: var(--space-20);
+        }
+
+        .project-description {
+          color: var(--color-text-secondary);
+          margin-bottom: var(--space-16);
+          line-height: 1.6;
+        }
+
+        .project-stats {
+          display: flex;
+          gap: var(--space-16);
+          margin-bottom: var(--space-16);
+          font-size: var(--font-size-sm);
+          color: var(--color-text-secondary);
+        }
+
+        .project-stat {
+          display: flex;
+          align-items: center;
+          gap: var(--space-8);
+        }
+
+        .project-tech {
+          display: flex;
+          flex-wrap: wrap;
+          gap: var(--space-8);
+          margin-bottom: var(--space-16);
+        }
+
+        .tech-tag {
+          background: rgba(var(--color-primary), 0.1);
+          color: var(--color-primary);
+          padding: var(--space-8) var(--space-12);
+          border-radius: var(--radius-base);
+          font-size: var(--font-size-sm);
+          font-weight: var(--font-weight-medium);
+        }
+
+        .project-links {
+          display: flex;
+          gap: var(--space-12);
+        }
+
+        .project-link {
+          color: var(--color-primary);
+          text-decoration: none;
+          font-weight: var(--font-weight-medium);
+          transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+          color: var(--color-primary-hover);
+        }
+
+        /* Loading State */
+        .loading {
+          text-align: center;
+          padding: var(--space-32);
+          color: var(--color-text-secondary);
+        }
+
+        .loading-spinner {
+          width: 40px;
+          height: 40px;
+          border: 3px solid rgba(var(--color-primary), 0.3);
+          border-top: 3px solid var(--color-primary);
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin: 0 auto var(--space-16);
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+          .container {
+            padding: 0 var(--space-16);
+          }
+          
+          .projects-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .filter-buttons {
+            gap: var(--space-8);
+          }
+          
+          .filter-btn {
+            padding: var(--space-8) var(--space-12);
+            font-size: var(--font-size-sm);
+          }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">SK</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link">Home</a>
+                <a href="about.html" class="nav-link">About</a>
+                <a href="index.html#skills" class="nav-link">Skills</a>
+                <a href="index.html#experience" class="nav-link">Experience</a>
+                <a href="projects.html" class="nav-link" style="color: var(--color-primary);">Projects</a>
+                <a href="index.html#services" class="nav-link">JEE Mentoring</a>
+                <a href="booking.html" class="nav-link" style="font-weight: bold;">📅 Book Now</a>
+                <a href="index.html#contact" class="nav-link">Contact</a>
+                <button class="theme-toggle" id="themeToggle">
+                    <span id="themeIcon">🌙</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Page Header -->
+            <div class="page-header">
+                <h1 class="page-title">All Projects</h1>
+                <p class="page-subtitle">
+                    Complete showcase of my GitHub repositories - from AI/ML projects to web applications
+                </p>
+            </div>
+
+            <!-- Filter Section -->
+            <div class="filter-section">
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All Projects</button>
+                    <button class="filter-btn" data-filter="javascript">JavaScript</button>
+                    <button class="filter-btn" data-filter="python">Python</button>
+                    <button class="filter-btn" data-filter="html">HTML/CSS</button>
+                    <button class="filter-btn" data-filter="ai">AI/ML</button>
+                </div>
+            </div>
+
+            <!-- Projects Grid -->
+            <div id="projectsContainer">
+                <div class="loading">
+                    <div class="loading-spinner"></div>
+                    <p>Loading projects from GitHub...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Projects data based on GitHub repositories
+        const projectsData = [
+            {
+                name: "Jeevant.ai",
+                description: "An AI-powered healthcare assistant project developed for MIT, focusing on health monitoring and medical assistance using artificial intelligence.",
+                emoji: "🤖",
+                language: "CSS",
+                category: "ai",
+                stars: 0,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/Jeevant.ai",
+                tech: ["AI/ML", "CSS", "Healthcare", "MIT"]
+            },
+            {
+                name: "Student Face Attendance System",
+                description: "Face Recognition Attendance System with check-in/check-out functionality. Automated attendance tracking using computer vision and facial recognition technology.",
+                emoji: "👤",
+                language: "HTML",
+                category: "ai",
+                stars: 1,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/student-face-attendence-system-",
+                tech: ["Computer Vision", "HTML", "Face Recognition", "Python"]
+            },
+            {
+                name: "Weather Application",
+                description: "A dynamic weather forecasting application providing real-time weather data, forecasts, and interactive weather visualization using JavaScript.",
+                emoji: "🌤️",
+                language: "JavaScript",
+                category: "javascript",
+                stars: 0,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/weather-application",
+                tech: ["JavaScript", "Weather API", "Real-time Data", "Web App"]
+            },
+            {
+                name: "Money Tracker Application",
+                description: "Personal finance management application for tracking expenses, income, and budgeting with interactive charts and financial insights.",
+                emoji: "💰",
+                language: "JavaScript",
+                category: "javascript",
+                stars: 0,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/new-money-tracker",
+                tech: ["JavaScript", "Finance", "Data Visualization", "Charts"]
+            },
+            {
+                name: "SIH MIT Project",
+                description: "Smart India Hackathon project workspace showcasing innovative solutions for real-world problems. A collaborative development environment for hackathon submissions.",
+                emoji: "🏆",
+                language: "Multiple",
+                category: "all",
+                stars: 0,
+                forks: 1,
+                url: "https://github.com/SONUKR321-hub/SIH_MIT",
+                tech: ["Hackathon", "Innovation", "Smart India", "MIT"]
+            },
+            {
+                name: "Tourist Landing Page",
+                description: "Beautiful and responsive tourist destination landing page showcasing travel destinations with modern CSS design and user-friendly interface.",
+                emoji: "🏖️",
+                language: "CSS",
+                category: "html",
+                stars: 0,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/tourist-landing-page",
+                tech: ["CSS", "Responsive Design", "Tourism", "Landing Page"]
+            },
+            {
+                name: "Project Drishti",
+                description: "Python-based project focusing on computer vision and image processing applications for real-world problem solving.",
+                emoji: "👁️",
+                language: "Python",
+                category: "python",
+                stars: 0,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/project-drishti1",
+                tech: ["Python", "Computer Vision", "Image Processing", "OpenCV"]
+            },
+            {
+                name: "Project CJI2",
+                description: "Web development project showcasing modern HTML/CSS techniques and responsive design principles.",
+                emoji: "⚖️",
+                language: "HTML",
+                category: "html",
+                stars: 0,
+                forks: 1,
+                url: "https://github.com/SONUKR321-hub/project-CJI2",
+                tech: ["HTML", "CSS", "Web Development", "Responsive"]
+            },
+            {
+                name: "Photography Menu",
+                description: "CSS mini project featuring a photography portfolio website with interactive sidebar menu and modern design elements.",
+                emoji: "📸",
+                language: "HTML",
+                category: "html",
+                stars: 0,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/css-mini-project-1--photography-menu",
+                tech: ["HTML", "CSS", "Photography", "Portfolio"]
+            },
+            {
+                name: "Portfolio New",
+                description: "Latest version of personal portfolio website built with modern JavaScript and responsive design principles.",
+                emoji: "💼",
+                language: "JavaScript",
+                category: "javascript",
+                stars: 0,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/portfolio-new",
+                tech: ["JavaScript", "Portfolio", "Responsive", "Modern Design"]
+            },
+            {
+                name: "Team Jeevant PPS",
+                description: "Team project focusing on problem-solving and programming skills development with collaborative coding practices.",
+                emoji: "👥",
+                language: "CSS",
+                category: "html",
+                stars: 0,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/team-_jeevant-_pps_p1",
+                tech: ["CSS", "Team Project", "Problem Solving", "Programming"]
+            },
+            {
+                name: "Google Forms Integration",
+                description: "Projects related to Google Forms integration and transparent form handling for web applications.",
+                emoji: "📝",
+                language: "HTML",
+                category: "html",
+                stars: 0,
+                forks: 0,
+                url: "https://github.com/SONUKR321-hub/gform-transparent",
+                tech: ["HTML", "Google Forms", "Integration", "Web Forms"]
+            }
+        ];
+
+        let currentTheme = 'dark';
+        let currentFilter = 'all';
+
+        // Theme Toggle
+        function initThemeToggle() {
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            
+            document.documentElement.setAttribute('data-theme', currentTheme);
+            themeIcon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+            
+            themeToggle.addEventListener('click', () => {
+                currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+                document.documentElement.setAttribute('data-theme', currentTheme);
+                themeIcon.textContent = currentTheme === 'dark' ? '☀️' : '🌙';
+            });
+        }
+
+        // Filter Projects
+        function filterProjects(category) {
+            currentFilter = category;
+            
+            // Update active filter button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.filter === category) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Filter and render projects
+            const filteredProjects = category === 'all' 
+                ? projectsData 
+                : projectsData.filter(project => 
+                    project.category === category || 
+                    project.language.toLowerCase() === category
+                );
+            
+            renderProjects(filteredProjects);
+        }
+
+        // Render Projects
+        function renderProjects(projects) {
+            const container = document.getElementById('projectsContainer');
+            
+            if (projects.length === 0) {
+                container.innerHTML = `
+                    <div class="loading">
+                        <p>No projects found for this category.</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const projectsHTML = projects.map(project => `
+                <div class="project-card" data-category="${project.category}">
+                    <div class="project-header">
+                        <div class="project-emoji">${project.emoji}</div>
+                        <h3 class="project-title">${project.name}</h3>
+                    </div>
+                    <div class="project-content">
+                        <p class="project-description">${project.description}</p>
+                        <div class="project-stats">
+                            <div class="project-stat">
+                                <span>⭐</span>
+                                <span>${project.stars}</span>
+                            </div>
+                            <div class="project-stat">
+                                <span>🍴</span>
+                                <span>${project.forks}</span>
+                            </div>
+                            <div class="project-stat">
+                                <span>💻</span>
+                                <span>${project.language}</span>
+                            </div>
+                        </div>
+                        <div class="project-tech">
+                            ${project.tech.map(tech => `<span class="tech-tag">${tech}</span>`).join('')}
+                        </div>
+                        <div class="project-links">
+                            <a href="${project.url}" class="project-link" target="_blank">
+                                View on GitHub →
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            container.innerHTML = `<div class="projects-grid">${projectsHTML}</div>`;
+            
+            // Animate cards
+            setTimeout(() => {
+                document.querySelectorAll('.project-card').forEach((card, index) => {
+                    setTimeout(() => {
+                        card.classList.add('visible');
+                    }, index * 100);
+                });
+            }, 100);
+        }
+
+        // Initialize Filter Buttons
+        function initFilters() {
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterProjects(btn.dataset.filter);
+                });
+            });
+        }
+
+        // Initialize Page
+        function init() {
+            // Simulate loading
+            setTimeout(() => {
+                renderProjects(projectsData);
+                initThemeToggle();
+                initFilters();
+            }, 1500);
+        }
+
+        // Start the application
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
